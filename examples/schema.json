@@ -1,0 +1,5 @@
+{
+  "PORT": {"required": true, "type": "integer", "min": 1, "max": 65535},
+  "DEBUG": {"type": "boolean"},
+  "API_TOKEN": {"required": true}
+}
