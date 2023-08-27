@@ -8,6 +8,11 @@ def validate(values, schema):
     for key, rule in schema.items():
         if not KEY.fullmatch(key) or not isinstance(rule, dict):
             raise ValueError("Invalid schema entry")
+        for bound in ("min", "max"):
+            if bound in rule and (type(rule[bound]) is not int):
+                raise ValueError("Schema bounds must be integers")
+        if "choices" in rule and not isinstance(rule["choices"], list):
+            raise ValueError("Schema choices must be a list")
         kind = rule.get("type", "string")
         if kind not in ("string", "integer", "boolean"):
             raise ValueError("Unsupported schema type for " + key)

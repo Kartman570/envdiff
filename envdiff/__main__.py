@@ -22,12 +22,14 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == "diff":
-            result = compare(parse(args.left.read_text()), parse(args.right.read_text()), args.ignore)
+            result = compare(parse(args.left.read_text()), parse(args.right.read_text()),
+                             args.ignore)
         else:
             result = validate(parse(args.file.read_text()), json.loads(args.schema.read_text()))
     except (OSError, UnicodeError, ValueError, TypeError) as error:
         if isinstance(error, (ValueError, TypeError)):
-            message = str(error) if not isinstance(error, json.JSONDecodeError) else "Invalid schema"
+            message = (str(error) if not isinstance(error, json.JSONDecodeError)
+                       else "Invalid schema")
         else:
             message = "Could not read an input file"
         print(message, file=sys.stderr)

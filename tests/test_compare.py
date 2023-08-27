@@ -22,3 +22,7 @@ class CompareTests(unittest.TestCase):
 
     def test_empty_is_missing(self):
         self.assertEqual(len(validate({"TOKEN": ""}, {"TOKEN": {"required": True}})), 1)
+
+    def test_invalid_schema(self):
+        with self.assertRaisesRegex(ValueError, "bounds must be integers"):
+            validate({"PORT": "2"}, {"PORT": {"type": "integer", "min": "bad"}})
